@@ -1,0 +1,2 @@
+pygments
+jinja2

@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <style>
+        * {
+            background: #272822;
+        }
+        /*.rcorner {
+            border-radius: 15px;
+            background: #272822;
+            box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
+            font-size: 14px;
+            padding: 16px;
+        }*/
+
+        {{ style|safe }}
+
+        .linenos {
+            color: #aaaaaa;
+            padding-right: 8px;
+        }
+    </style>
+</head>
+<body>
+<div class="rcorner">
+    {{ code|safe }}
+</div>
+</body>
+</html>

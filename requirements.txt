@@ -1,2 +1,2 @@
 pygments
-jinja2
+pillow

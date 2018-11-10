@@ -3,7 +3,7 @@
 from flask import Flask
 import sys
 
-from highlighter import make_html, make_png
+from highlighter import make_image
 
 app = Flask(__name__)
 
@@ -16,8 +16,6 @@ def hello_world():
 if __name__ == '__main__':
     # app.run()
     with open(sys.argv[1]) as f:
-        x = make_html(f.read())
-    print(x)
-    with open("temp.html", "w") as f:
-        f.write(x)
-    make_png("temp.html", "1.png")
+        data = f.read()
+    x = make_image(data, "1.png", False)
+    x = make_image(data, "2.png", True)

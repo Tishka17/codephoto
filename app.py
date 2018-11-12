@@ -30,7 +30,3 @@ def custom_static(filename):
 
 if __name__ == '__main__':
     app.run()
-    # with open(sys.argv[1]) as f:
-    #     data = f.read()
-    # x = make_image(data, "1.png", False)
-    # x = make_image(data, "2.png", True)

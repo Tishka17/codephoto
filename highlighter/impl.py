@@ -1,10 +1,9 @@
 #!/usr/bin/env python
 # -*- coding: utf-8 -*-
+from PIL import Image, ImageChops
 from pygments import highlight
 from pygments.formatters import ImageFormatter
 from pygments.lexers import guess_lexer
-
-template = env.get_template("code.html")
 
 light_formatter = ImageFormatter(
     style="tango",
@@ -29,10 +28,31 @@ dark_formatter = ImageFormatter(
 )
 
 
-def limit_input(content: str, max_lines=48) -> str:
-    return "\n".join(content.splitlines()[:max_lines])
+def limit_input(content: str, max_lines=47) -> str:
+    lines = content.splitlines()
+    if len(lines) > max_lines:
+        lines = lines[:max_lines]
+    else:
+        lines = lines + [" "] * (max_lines - len(lines))
+    return "\n".join(lines)
+
+
+matrix = [1.33415104e+00, 3.20998746e-02, -4.56420092e+01, 8.66755517e-02,
+          1.12526155e+00, -1.99521038e+02, 2.41003654e-04, 3.87679645e-05]
+
+
+def transofrm(img_file):
+    # Import background image
+    background_img_raw = Image.open('templates/background.jpg').convert("RGBA")
+
+    foreground_img_raw = Image.open(img_file).convert("RGBA")
+    foreground_img_raw = foreground_img_raw.transform(background_img_raw.size, method=Image.PERSPECTIVE, data=matrix,
+                                                      fillcolor=(255, 255, 255))
+
+    ImageChops.multiply(foreground_img_raw, background_img_raw, ).save(img_file)
 
 
 def make_image(content, output, dark=False):
     lexer = guess_lexer(content)
     highlight(limit_input(content), lexer, dark_formatter if dark else light_formatter, output)
+    transofrm(output)

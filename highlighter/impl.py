@@ -5,27 +5,29 @@ from pygments import highlight
 from pygments.formatters import ImageFormatter
 from pygments.lexers import guess_lexer
 
-light_formatter = ImageFormatter(
-    style="tango",
-    format="png",
-    line_numbers=True,
-    font_name='DejaVu Sans Mono',
-    font_size=14,
-    line_number_bg="#e0e0e0",
-    line_number_fg="#999999",
-    image_pad=8,
-)
 
-dark_formatter = ImageFormatter(
-    style="monokai",
-    format="png",
-    line_numbers=True,
-    font_name='DejaVu Sans Mono',
-    font_size=14,
-    line_number_bg="#272822",
-    line_number_fg="#888888",
-    image_pad=8,
-)
+def get_formatter(dark):
+    if dark:
+        return ImageFormatter(
+            style="monokai",
+            format="png",
+            line_numbers=True,
+            font_name='DejaVu Sans Mono',
+            font_size=14,
+            line_number_bg="#272822",
+            line_number_fg="#888888",
+            image_pad=8,
+        )
+    return ImageFormatter(
+        style="tango",
+        format="png",
+        line_numbers=True,
+        font_name='DejaVu Sans Mono',
+        font_size=14,
+        line_number_bg="#e0e0e0",
+        line_number_fg="#999999",
+        image_pad=8,
+    )
 
 
 def limit_input(content: str, max_lines=47) -> str:
@@ -54,5 +56,5 @@ def transofrm(img_file):
 
 def make_image(content, output, dark=False):
     lexer = guess_lexer(content)
-    highlight(limit_input(content), lexer, dark_formatter if dark else light_formatter, output)
+    highlight(limit_input(content), lexer, get_formatter(dark), output)
     transofrm(output)

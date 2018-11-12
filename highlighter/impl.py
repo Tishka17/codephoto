@@ -49,7 +49,7 @@ def transofrm(img_file):
 
     foreground_img_raw = Image.open(img_file).convert("RGBA")
     foreground_img_raw = foreground_img_raw.transform(background_img_raw.size, method=Image.PERSPECTIVE, data=matrix,
-                                                      fillcolor=(255, 255, 255))
+                                                      resample=Image.BILINEAR,fillcolor=(255, 255, 255))
 
     ImageChops.multiply(foreground_img_raw, background_img_raw, ).save(img_file)
 

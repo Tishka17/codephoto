@@ -1,6 +1,7 @@
 #!/usr/bin/env python3
 # -*- coding: utf-8 -*-
 import os
+import random
 
 from flask import Flask, render_template, request, redirect, send_from_directory
 
@@ -15,11 +16,15 @@ def hello_world():
     return render_template("input.html")
 
 
+def get_random_bg():
+    return "templates/pycharm/%s.jpg" % random.randint(1, 8)
+
+
 @app.route("/code", methods=["POST"])
 def render_code():
     code = request.form["code"]
     name = gen_name_uniq(5)
-    make_image(code, os.path.join(UPLOAD_DIR, name), background="templates/pycharm/1.jpg")
+    make_image(code, os.path.join(UPLOAD_DIR, name), background=get_random_bg())
     return redirect("/i/" + name)
 
 

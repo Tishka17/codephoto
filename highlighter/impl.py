@@ -67,6 +67,8 @@ matrix = [9.92281711e-01, -8.32406761e-02, 7.93428984e+00, 1.05581532e-02,
 def transofrm(img_file, background, matrix=None):
     # Import background image
     background_img_raw = Image.open(background).convert("RGBA")
+    if matrix is None:
+        matrix = get_matrix(background)
 
     foreground_img_raw = Image.open(img_file).convert("RGBA")
     foreground_img_raw = foreground_img_raw.transform(background_img_raw.size, method=Image.PERSPECTIVE, data=matrix,

@@ -19,7 +19,7 @@ def hello_world():
 def render_code():
     code = request.form["code"]
     name = gen_name_uniq(5)
-    make_image(code, os.path.join(UPLOAD_DIR, name))
+    make_image(code, os.path.join(UPLOAD_DIR, name), background="templates/pycharm/1.jpg")
     return redirect("/i/" + name)
 
 

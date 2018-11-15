@@ -16,6 +16,8 @@ class Formatter(ImageFormatter):
         pixmap, then calculates the required pixmap size and draws the items.
         """
         self._create_drawables(tokensource)
+        self.maxcharno = 120
+        self.maxlineno = 47
         self._draw_line_numbers()
         im = Image.new(
             'RGB',

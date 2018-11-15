@@ -18,7 +18,7 @@ class Formatter(ImageFormatter):
         self._create_drawables(tokensource)
         self._draw_line_numbers()
         im = Image.new(
-            'RGBA',
+            'RGB',
             self._get_image_size(self.maxcharno, self.maxlineno),
             self.background_color
         )

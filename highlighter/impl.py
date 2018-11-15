@@ -58,7 +58,7 @@ def get_matrix(bg):
 
 
 def transform(img, img_file, background, matrix=None):
-    background_img_raw = Image.open(background).convert("RGBA")
+    background_img_raw = Image.open(background)
     if matrix is None:
         matrix = get_matrix(background)
 

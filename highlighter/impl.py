@@ -66,7 +66,7 @@ def transform(img, img_file, background, matrix=None):
     foreground_img_raw = foreground_img_raw.transform(background_img_raw.size, method=Image.PERSPECTIVE, data=matrix,
                                                       resample=Image.BILINEAR, fillcolor=(255, 255, 255))
 
-    ImageChops.multiply(foreground_img_raw, background_img_raw).save(img_file)
+    ImageChops.multiply(foreground_img_raw, background_img_raw).convert("RGB").save(img_file)
 
 
 def make_image(content, output, background, dark=False, matrix=None):

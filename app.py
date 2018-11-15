@@ -6,7 +6,7 @@ import random
 from flask import Flask, render_template, request, redirect, send_from_directory
 
 from highlighter import make_image
-from uploader import gen_name_uniq, UPLOAD_DIR
+from uploader import gen_name_uniq, UPLOAD_DIR, upload
 
 app = Flask(__name__)
 
@@ -24,13 +24,15 @@ def get_random_bg():
 def render_code():
     code = request.form["code"]
     name = gen_name_uniq(5)
-    make_image(code, os.path.join(UPLOAD_DIR, name), background=get_random_bg())
+    path = os.path.join(UPLOAD_DIR, name+".jpg")
+    make_image(code, path, background=get_random_bg())
+    upload(path, name)
     return redirect("/i/" + name)
 
 
 @app.route('/i/<path:filename>')
 def custom_static(filename):
-    return send_from_directory(UPLOAD_DIR, filename)
+    return render_template("image.html", image=filename)
 
 
 if __name__ == '__main__':

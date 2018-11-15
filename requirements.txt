@@ -2,3 +2,4 @@ pygments
 pillow
 gunicorn
 flask
+boto3

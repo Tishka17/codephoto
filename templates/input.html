@@ -11,9 +11,18 @@
 <div class="container">
     <p></p>
     <div class="jumbotron">
-        <h2 class="display-4">Code Photo <small class="text-muted">by @Tishka17</small></h2>
+        <h2 class="display-4">Code Photo
+            <small class="text-muted">by @Tishka17</small>
+        </h2>
         <form action="/code" method="post">
-
+            <div class="form-group">
+                <select class="form-control" id="language" name="language">
+                    <option value="">(Auto)</option>
+                    {% for lang in languages %}
+                        <option>{{ lang }}</option>
+                    {% endfor %}
+                </select>
+            </div>
             <div class="form-group">
                 <textarea class="form-control" name="code" id="code" style="min-height: 500px;"
                           placeholder="Paste your code here"></textarea>
@@ -27,11 +36,15 @@
 <!-- Global site tag (gtag.js) - Google Analytics -->
 <script async src="https://www.googletagmanager.com/gtag/js?id=UA-16152295-4"></script>
 <script>
-  window.dataLayer = window.dataLayer || [];
-  function gtag(){dataLayer.push(arguments);}
-  gtag('js', new Date());
+    window.dataLayer = window.dataLayer || [];
 
-  gtag('config', 'UA-16152295-4');
+    function gtag() {
+        dataLayer.push(arguments);
+    }
+
+    gtag('js', new Date());
+
+    gtag('config', 'UA-16152295-4');
 </script>
 </body>
 </html>

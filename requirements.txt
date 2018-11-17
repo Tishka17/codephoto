@@ -3,3 +3,4 @@ pillow
 gunicorn
 flask
 boto3
+Flask-WTF

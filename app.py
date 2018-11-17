@@ -2,13 +2,24 @@
 # -*- coding: utf-8 -*-
 import os
 import random
+import string
 
-from flask import Flask, render_template, request, redirect, send_from_directory
+from flask import Flask, render_template, redirect, send_from_directory
+from flask_wtf import FlaskForm, CSRFProtect
+from wtforms import StringField, TextField
+from wtforms.validators import DataRequired
 
 from highlighter import make_image, get_languages
 from uploader import gen_name_uniq, UPLOAD_DIR
 
 app = Flask(__name__)
+app.config['SECRET_KEY'] = "".join(random.choice(string.printable) for x in range(100))
+csrf = CSRFProtect(app)
+
+
+class MyForm(FlaskForm):
+    language = StringField('language')
+    code = TextField("code", validators=[DataRequired()])
 
 
 @app.route('/')
@@ -27,11 +38,12 @@ def get_random_bg():
 
 @app.route("/code", methods=["POST"])
 def render_code():
-    code = request.form["code"]
-    lang = request.form["language"]
+    form = MyForm()
+    if not form.validate():
+        return redirect("/")
     name = gen_name_uniq(5)
     path = os.path.join(UPLOAD_DIR, name + ".jpg")
-    make_image(code, path, lang, background=get_random_bg())
+    make_image(form.code.data, path, form.language.data, background=get_random_bg())
     # upload(path, name, nickname)
     return redirect("/i/" + name)
 

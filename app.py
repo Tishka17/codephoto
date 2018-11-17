@@ -5,15 +5,20 @@ import random
 
 from flask import Flask, render_template, request, redirect, send_from_directory
 
-from highlighter import make_image
-from uploader import gen_name_uniq, UPLOAD_DIR, upload
+from highlighter import make_image, get_languages
+from uploader import gen_name_uniq, UPLOAD_DIR
 
 app = Flask(__name__)
 
 
 @app.route('/')
 def hello_world():
-    return render_template("input.html")
+    return render_template("input.html", languages=get_languages())
+
+
+@app.route('/upload/<path:filename>')
+def image(filename):
+    return send_from_directory("upload", filename)
 
 
 def get_random_bg():
@@ -23,10 +28,11 @@ def get_random_bg():
 @app.route("/code", methods=["POST"])
 def render_code():
     code = request.form["code"]
+    lang = request.form["language"]
     name = gen_name_uniq(5)
-    path = os.path.join(UPLOAD_DIR, name+".jpg")
-    make_image(code, path, background=get_random_bg())
-    upload(path, name)
+    path = os.path.join(UPLOAD_DIR, name + ".jpg")
+    make_image(code, path, lang, background=get_random_bg())
+    # upload(path, name, nickname)
     return redirect("/i/" + name)
 
 

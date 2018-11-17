@@ -5,7 +5,7 @@ from typing import List, Dict
 
 from PIL import Image, ImageChops
 from pygments import highlight
-from pygments.lexers import guess_lexer
+from pygments.lexers import guess_lexer, get_all_lexers, find_lexer_class_by_name, find_lexer_class
 
 from .formatter import Formatter
 
@@ -69,8 +69,23 @@ def transform(img, img_file, background, matrix=None):
     ImageChops.multiply(foreground_img_raw, background_img_raw).convert("RGB").save(img_file)
 
 
-def make_image(content, output, background, dark=False, matrix=None):
-    lexer = guess_lexer(content)
+def make_image(content, output, lang, background, dark=False, matrix=None):
+    lexer = None
+    if lang:
+        lexer = find_lexer_class(lang)()
+    if not lexer:
+        lexer = guess_lexer(content)
     formatter = get_formatter(dark)
     highlight(limit_input(content), lexer, formatter, output)
     transform(formatter.image, output, background, matrix)
+
+
+languages: List[str] = []
+
+
+def get_languages() -> List[str]:
+    if not languages:
+        languages.extend(sorted([
+            x[0] for x in get_all_lexers()
+        ]))
+    return languages

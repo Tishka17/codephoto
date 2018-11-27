@@ -1,5 +1,6 @@
 #!/usr/bin/env python3
 # -*- coding: utf-8 -*-
+import glob
 import os
 import random
 import string
@@ -33,7 +34,7 @@ def image(filename):
 
 
 def get_random_bg():
-    return "templates/pycharm/%s.jpg" % random.randint(1, 8)
+    return random.choice(glob.glob("templates/pycharm/*.jpg"))
 
 
 @app.route("/code", methods=["POST"])

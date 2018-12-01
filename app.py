@@ -51,7 +51,11 @@ def render_code():
 
 @app.route('/i/<path:filename>')
 def custom_static(filename):
-    return render_template("image.html", image=filename)
+    path = os.path.join(UPLOAD_DIR, filename + ".jpg")
+    if os.path.exists(path):
+        return render_template("image.html", image=filename)
+    else:
+        return render_template("not_found.html"), 404
 
 
 if __name__ == '__main__':

@@ -1,5 +1,6 @@
 #!/usr/bin/env python3
 # -*- coding: utf-8 -*-
+import glob
 import os
 import random
 import string
@@ -13,7 +14,7 @@ from highlighter import make_image, get_languages
 from uploader import gen_name_uniq, UPLOAD_DIR
 
 app = Flask(__name__)
-app.config['SECRET_KEY'] = "".join(random.choice(string.printable) for x in range(100))
+app.config['SECRET_KEY'] = os.environ.get("FLASK_SECRET")
 csrf = CSRFProtect(app)
 
 
@@ -33,7 +34,7 @@ def image(filename):
 
 
 def get_random_bg():
-    return "templates/pycharm/%s.jpg" % random.randint(1, 8)
+    return random.choice(glob.glob("templates/pycharm/*.jpg"))
 
 
 @app.route("/code", methods=["POST"])

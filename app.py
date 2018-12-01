@@ -4,7 +4,7 @@ import os
 import random
 import string
 
-from flask import Flask, render_template, redirect, send_from_directory
+from flask import Flask, render_template, redirect, send_from_directory, request
 from flask_wtf import FlaskForm, CSRFProtect
 from wtforms import StringField, TextField
 from wtforms.validators import DataRequired
@@ -29,7 +29,7 @@ def hello_world():
 
 @app.route('/upload/<path:filename>')
 def image(filename):
-    return send_from_directory("upload", filename)
+    return send_from_directory("upload", filename, as_attachment=('download' in request.args))
 
 
 def get_random_bg():

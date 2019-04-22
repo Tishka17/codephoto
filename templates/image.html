@@ -5,7 +5,8 @@
     <title>CodePhoto</title>
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css"
           integrity="sha384-MCw98/SFnGE8fJT3GXwEOngsV7Zt27NXFoaoApmYm81iuXoPkFOJwJ8ERdknLPMO" crossorigin="anonymous">
-    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.5.0/css/all.css" integrity="sha384-B4dIYHKNBt8Bc12p+WXckhzcICo0wtJAoU8YZTY5qE0Id1GSseTk6S+L3BlXeVIU" crossorigin="anonymous">
+    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.5.0/css/all.css"
+          integrity="sha384-B4dIYHKNBt8Bc12p+WXckhzcICo0wtJAoU8YZTY5qE0Id1GSseTk6S+L3BlXeVIU" crossorigin="anonymous">
 
 
     <script>
@@ -26,14 +27,19 @@
         </h2>
         <p>
             <a href="/" class="btn btn-primary"><i class="fa fa-camera"></i> Take new photo</a>
-            <a href="https://telegram.me/share/url?url={{ request.url }}"  class="btn btn-light"><i class="fab fa-telegram-plane"></i> Telegram</a>
-            <a href="/upload/{{ image }}.jpg?download" class="btn btn-light"><i class="fa fa-download"></i> Download this</a>
+            <a href="https://telegram.me/share/url?url={{ request.url }}" class="btn btn-light"><i
+                    class="fab fa-telegram-plane"></i> Telegram</a>
+            <a href="/upload/{{ image }}.jpg?download" class="btn btn-light"><i class="fa fa-download"></i> Download
+                this</a>
         </p>
         {#<img src="https://s3.eu-central-1.amazonaws.com/codephoto/uploads/{{ image }}.jpg">#}
 
         <hr class="my-4">
-         <img class="img-fluid" src="/upload/{{ image }}.jpg">
+        <img class="img-fluid" src="/upload/{{ image }}.jpg">
     </div>
+    <iframe src="https://money.yandex.ru/quickpay/shop-widget?writer=seller&targets=%D0%9F%D0%BE%D0%B4%D0%B4%D0%B5%D1%80%D0%B6%D0%B0%D1%82%D1%8C%20codephoto.ru&targets-hint=&default-sum=100&button-text=14&hint=&successURL=codephoto.ru&quickpay=shop&account=410011106755331"
+            width="423" height="222" frameborder="0" allowtransparency="true" scrolling="no">
+    </iframe>
 </div>
 <!-- Global site tag (gtag.js) - Google Analytics -->
 <script async src="https://www.googletagmanager.com/gtag/js?id=UA-16152295-4"></script>

@@ -67,7 +67,7 @@ def tg_webhook():
     data = request.get_json(force=True)
     logging.info(data)
     update = Update.de_json(data, bot=bot)
-    queue.put(update)
+    dp.process_update(update)
     return "OK"
 
 
@@ -78,5 +78,4 @@ def webhook_get():
 
 if __name__ == '__main__':
     logging.basicConfig(level=logging.INFO)
-    Thread(target=dp.start).start()
     app.run()

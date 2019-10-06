@@ -1,5 +1,6 @@
 #!/usr/bin/env python3
 # -*- coding: utf-8 -*-
+import logging
 import os
 
 from flask import Flask, render_template, redirect, send_from_directory, request
@@ -60,8 +61,9 @@ def custom_static(filename):
 
 @app.route('/hook/' + TG_TOKEN, methods=['POST'])
 def tg_webhook():
+    logging.info("tg_webhook")
     data = request.get_json(force=True)
-    print(data)
+    logging.info(data)
     update = Update.de_json(data, bot=bot)
     queue.put(update)
     return "OK"
@@ -73,4 +75,5 @@ def webhook_get():
 
 
 if __name__ == '__main__':
+    logging.basicConfig(level=logging.INFO)
     app.run()

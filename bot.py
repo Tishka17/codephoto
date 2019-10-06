@@ -21,7 +21,8 @@ def process_code(update: Update, context: CallbackContext):
         context.bot.send_photo(
             chat_id=update.effective_chat.id,
             photo=f,
-            reply_to_message_id=update.effective_message.message_id
+            reply_to_message_id=update.effective_message.message_id,
+            caption="http://codephoto.ru/i/"+name
         )
 
 

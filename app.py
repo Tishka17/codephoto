@@ -60,7 +60,9 @@ def custom_static(filename):
 
 @app.route('/hook/' + TG_TOKEN, methods=['POST'])
 def tg_webhook():
-    update = Update.de_json(request.get_json(force=True), bot=bot)
+    data = request.get_json(force=True)
+    print(data)
+    update = Update.de_json(data, bot=bot)
     queue.put(update)
     return "OK"
 

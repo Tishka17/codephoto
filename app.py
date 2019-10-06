@@ -60,6 +60,7 @@ def custom_static(filename):
 
 
 @app.route('/hook/' + TG_TOKEN, methods=['POST'])
+@csrf.exempt
 def tg_webhook():
     logging.info("tg_webhook")
     data = request.get_json(force=True)

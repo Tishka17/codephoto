@@ -2,6 +2,7 @@
 # -*- coding: utf-8 -*-
 import logging
 import os
+from threading import Thread
 
 from flask import Flask, render_template, redirect, send_from_directory, request
 from flask_wtf import FlaskForm, CSRFProtect
@@ -77,4 +78,5 @@ def webhook_get():
 
 if __name__ == '__main__':
     logging.basicConfig(level=logging.INFO)
+    Thread(target=dp.start).start()
     app.run()

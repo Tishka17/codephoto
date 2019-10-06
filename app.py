@@ -1,21 +1,25 @@
 #!/usr/bin/env python3
 # -*- coding: utf-8 -*-
-import glob
 import os
-import random
-import string
 
 from flask import Flask, render_template, redirect, send_from_directory, request
 from flask_wtf import FlaskForm, CSRFProtect
+from telegram import Update
 from wtforms import StringField, TextField
 from wtforms.validators import DataRequired
 
+from bot import create_dispatcher, register_handlers
 from highlighter import make_image, get_languages
+from logic import get_random_bg
 from uploader import gen_name_uniq, UPLOAD_DIR
 
 app = Flask(__name__)
 app.config['SECRET_KEY'] = os.environ.get("FLASK_SECRET")
+TG_TOKEN = os.environ.get("TG_TOKEN")
 csrf = CSRFProtect(app)
+
+bot, queue, dp = create_dispatcher(TG_TOKEN)
+register_handlers(dp)
 
 
 class MyForm(FlaskForm):
@@ -31,10 +35,6 @@ def hello_world():
 @app.route('/upload/<path:filename>')
 def image(filename):
     return send_from_directory("upload", filename, as_attachment=('download' in request.args))
-
-
-def get_random_bg():
-    return random.choice(glob.glob("templates/pycharm/*.jpg"))
 
 
 @app.route("/code", methods=["POST"])
@@ -56,6 +56,18 @@ def custom_static(filename):
         return render_template("image.html", image=filename)
     else:
         return render_template("not_found.html"), 404
+
+
+@app.route('/hook/' + TG_TOKEN, methods=['POST'])
+def tg_webhook():
+    update = Update.de_json(request.get_json(force=True), bot=bot)
+    queue.put(update)
+    return "OK"
+
+
+@app.route('/hook/' + TG_TOKEN, methods=['GET'])
+def webhook_get():
+    return redirect("https://telegram.me/links_forward_bot", code=302)
 
 
 if __name__ == '__main__':
